@@ -16,9 +16,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <fastjson.version>1.2.44</fastjson.version>
+    <fastjson.version>1.2.47</fastjson.version>
     <common-lang3.version>3.7</common-lang3.version>
     <common-collections4.version>4.1</common-collections4.version>
+    <lombok.version>1.18.0</lombok.version>
+    <snakeyaml.version>1.21</snakeyaml.version>
   </properties>
 
   <dependencies>
@@ -48,6 +50,16 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
       <version>4.3.14.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>${snakeyaml.version}</version>
     </dependency>
   </dependencies>
 
