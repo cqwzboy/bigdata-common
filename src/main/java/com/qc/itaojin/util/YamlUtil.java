@@ -21,7 +21,7 @@ public class YamlUtil {
         return yaml.loadAs(classLoader.getResourceAsStream(path), clazz);
     }
 
-    public static Map<String, Object> load(String path){
+    public static <T> T load(String path){
         if(StringUtils.isBlank(path)){
             return null;
         }
