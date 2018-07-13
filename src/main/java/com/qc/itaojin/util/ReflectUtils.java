@@ -3,6 +3,7 @@ package com.qc.itaojin.util;
 import com.qc.itaojin.enums.GenericType;
 import org.springframework.util.Assert;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -145,6 +146,28 @@ public class ReflectUtils {
         throw new IllegalArgumentException("error reflect type");*/
     }
 
+
+    /**
+     * class是否使用了某个注解
+     * */
+    public static void isAnnotationPresent(Class clazz, Class<? extends Annotation> annoClass){
+        Assert.notNull(clazz, "clazz must not be null");
+        Assert.notNull(annoClass, "annoClass must not be null");
+        if(!clazz.isAnnotationPresent(annoClass)){
+            throw new IllegalArgumentException(String.format("%s must has annotation %s", clazz.getName(), annoClass.getName()));
+        }
+    }
+
+    /**
+     * Filed是否使用了某个注解
+     * */
+    public static void isAnnotationPresent(Field field, Class<? extends Annotation> annoClass){
+        Assert.notNull(field, "field must not be null");
+        Assert.notNull(annoClass, "annoClass must not be null");
+        if(!field.isAnnotationPresent(annoClass)){
+            throw new IllegalArgumentException(String.format("%s must use annotation %s", field.getName(), annoClass.getName()));
+        }
+    }
 
     public static void main(String[] args){
         Field[] fields = Test.class.getDeclaredFields();
