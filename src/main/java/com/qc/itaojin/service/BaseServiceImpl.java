@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by fuqinqin on 2018/7/2.
  */
-public class BaseService {
+public class BaseServiceImpl {
 
     private String charset = "UTF-8";
 
