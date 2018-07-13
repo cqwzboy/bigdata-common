@@ -2,8 +2,6 @@ package com.qc.itaojin.util;
 
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.Map;
-
 /**
  * Created by fuqinqin on 2018/7/4.
  */

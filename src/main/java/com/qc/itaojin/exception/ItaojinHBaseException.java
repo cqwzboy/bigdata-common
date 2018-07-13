@@ -19,14 +19,9 @@ public class ItaojinHBaseException extends Exception {
     private int errorCode;
 
     /**
-     * 明明空间
+     * 命名空间 + 表格
      * */
-    private String nameSpace;
-
-    /**
-     * 表格
-     * */
-    private String table;
+    private String nameSpaceAndTable;
 
     public ItaojinHBaseException(int errorCode) {
         super(String.format("errorCode=%d", errorCode));
@@ -38,18 +33,10 @@ public class ItaojinHBaseException extends Exception {
         this.errorCode = errorCode;
     }
 
-    public ItaojinHBaseException(int errorCode, String nameSpace, String table) {
-        super(String.format("errorCode=%d, nameSpace=%s, table=%s", errorCode, nameSpace, table));
+    public ItaojinHBaseException(int errorCode, String nameSpaceAndTable, String message) {
+        super(String.format("errorCode=%d, nameSpaceAndTable=%s, message=%s", errorCode, nameSpaceAndTable, message));
         this.errorCode = errorCode;
-        this.nameSpace = nameSpace;
-        this.table = table;
-    }
-
-    public ItaojinHBaseException(int errorCode, String nameSpace, String table, String message) {
-        super(String.format("errorCode=%d, nameSpace=%s, table=%s, message=%s", errorCode, nameSpace, table, message));
-        this.errorCode = errorCode;
-        this.nameSpace = nameSpace;
-        this.table = table;
+        this.nameSpaceAndTable = nameSpaceAndTable;
     }
 
     public ItaojinHBaseException(String message, Throwable cause) {
