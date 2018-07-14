@@ -172,6 +172,22 @@ public class ReflectUtils {
     }
 
     /**
+     * 解析类注解
+     * */
+    public static <T> T analyzeClassAnnotation(Class clazz, Class<? extends Annotation> annoClass, String method){
+        Assert.notNull(clazz, "clazz must not be null");
+        Assert.notNull(annoClass, "annoClass must not be null");
+        Assert.hasLength(method, "method must not be null");
+
+        if(clazz.isAnnotationPresent(annoClass)){
+            Annotation[] annotations = clazz.getDeclaredAnnotations();
+            return analyze(annotations, annoClass, method);
+        }
+
+        return null;
+    }
+
+    /**
      * 解析属性注解
      * */
     public static <T> T analyzeFieldAnnotation(Field field, Class<? extends Annotation> annoClass, String method){
@@ -181,21 +197,27 @@ public class ReflectUtils {
 
         if(field.isAnnotationPresent(annoClass)){
             Annotation[] annotations = field.getDeclaredAnnotations();
-            if(annotations==null || annotations.length==0){
-                return null;
-            }
-            for (Annotation annotation : annotations) {
-                if(annotation.annotationType().equals(annoClass)){
-                    try {
-                        Method m = annoClass.getDeclaredMethod(method);
-                        return (T) m.invoke(annotation);
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
+            return analyze(annotations, annoClass, method);
+        }
+
+        return null;
+    }
+
+    private static <T> T analyze(Annotation[] annotations, Class<? extends  Annotation> annoClass, String method){
+        if(annotations==null || annotations.length==0){
+            return null;
+        }
+        for (Annotation annotation : annotations) {
+            if(annotation.annotationType().equals(annoClass)){
+                try {
+                    Method m = annoClass.getDeclaredMethod(method);
+                    return (T) m.invoke(annotation);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
                 }
             }
         }
