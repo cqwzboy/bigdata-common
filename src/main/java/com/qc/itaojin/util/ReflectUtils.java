@@ -5,6 +5,8 @@ import org.springframework.util.Assert;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -167,6 +169,38 @@ public class ReflectUtils {
         if(!field.isAnnotationPresent(annoClass)){
             throw new IllegalArgumentException(String.format("%s must use annotation %s", field.getName(), annoClass.getName()));
         }
+    }
+
+    /**
+     * 解析属性注解
+     * */
+    public static <T> T analyzeFieldAnnotation(Field field, Class<? extends Annotation> annoClass, String method){
+        Assert.notNull(field, "field must not be null");
+        Assert.notNull(annoClass, "annoClass must not be null");
+        Assert.hasLength(method, "method must not be null");
+
+        if(field.isAnnotationPresent(annoClass)){
+            Annotation[] annotations = field.getDeclaredAnnotations();
+            if(annotations==null || annotations.length==0){
+                return null;
+            }
+            for (Annotation annotation : annotations) {
+                if(annotation.annotationType().equals(annoClass)){
+                    try {
+                        Method m = annoClass.getDeclaredMethod(method);
+                        return (T) m.invoke(annotation);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     public static void main(String[] args){
